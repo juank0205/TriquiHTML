@@ -1,0 +1,55 @@
+.table{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    background-image: url(Images/table.svg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.mark-x{
+    background-image: url(Images/x.svg);
+    background-size: 100% 100%;
+}
+
+.mark-o{
+    background-image: url(Images/o.svg);
+    background-size: 100% 100%;
+}
+.line{
+    background-size:  100% 100%;
+    height: 100%;
+    width:  100%;
+    position: absolute;
+}
+.line-winner-1{
+    background-image: url(Images/line-winner-1.svg);
+}
+.line-winner-2{
+    background-image: url(Images/line-winner-2.svg);
+}
+.line-winner-3{
+    background-image: url(Images/line-winner-1.svg);
+    transform: rotate(180deg);
+}
+.line-winner-4{
+    background-image: url(Images/line-winner-1.svg);
+    transform: rotate(270deg);
+}
+.line-winner-5{
+    background-image: url(Images/line-winner-2.svg);
+    transform: rotate(90deg);
+}
+.line-winner-6{
+    background-image: url(Images/line-winner-1.svg);
+    transform: rotate(90deg);
+}
+.line-winner-7{
+    background-image: url(Images/line-winner-3.svg);
+}
+.line-winner-8{
+    background-image: url(Images/line-winner-3.svg);
+    transform: rotate(90deg);
+}
