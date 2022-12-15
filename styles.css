@@ -32,7 +32,6 @@
 }
 .line-winner-1{
     background-image: url(Images/line-winner-1.svg);
-    fill: red;
 }
 .line-winner-2{
     background-image: url(Images/line-winner-2.svg);
@@ -60,12 +59,20 @@
     background-image: url(Images/line-winner-3.svg);
     transform: rotate(90deg);
 }
-
 h1{
     margin: 0;
     font-family: cursive;
 }
-
 .score{
     font-family: cursive;
+}
+body{
+    background-image: url(Images/squared-paper-texture.jpg);
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+html, body{
+    height: 100vh;
 }
