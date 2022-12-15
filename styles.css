@@ -32,6 +32,7 @@
 }
 .line-winner-1{
     background-image: url(Images/line-winner-1.svg);
+    fill: red;
 }
 .line-winner-2{
     background-image: url(Images/line-winner-2.svg);

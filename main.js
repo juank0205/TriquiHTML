@@ -1,18 +1,29 @@
 let turn = true;
 let movesArray = new Array(9).fill(null);
+const juega = document.querySelector('.turnDisplayer');
 let x=0, o=0;
 
 function newGame(){
+    turn = true
     document.querySelector('.table').innerHTML = '<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>'
     const boxlist = document.querySelectorAll('.table .box');
+    if (!turn){
+        juega.innerText = 'Juega O';
+    }else{
+        juega.innerText = 'Juega X';
+    }
     boxlist.forEach( (box, index) => {
+        turn = true;
         box.addEventListener('click', () =>{
             if (turn){
                 box.classList.add('mark-x');
+                juega.innerText = 'Juega O'
             }else{
                 box.classList.add('mark-o')
+                juega.innerText = 'Juega X'
             }
             movesArray[index] = turn;
+
             const mayWinner = numberWin();
             if (mayWinner){
                 const lineWinner = document.createElement('div');
@@ -22,9 +33,11 @@ function newGame(){
                 if (turn) x++
                 else o++;
             }
+
             document.querySelector('#x').innerText = x
             document.querySelector('#o').innerText = o
-    
+            
+
             turn = !turn
         }, {once: true})
     });
@@ -69,5 +82,7 @@ document.querySelector('#restart').addEventListener('click', () => {
     movesArray = new Array(9).fill(null);
     newGame();
 })
+
+
 
 newGame();
