@@ -1,7 +1,34 @@
-const boxlist = document.querySelectorAll('.table .box');
 let turn = true;
-const movesArray = new Array(9).fill(null);
+let movesArray = new Array(9).fill(null);
+let x=0, o=0;
 
+function newGame(){
+    document.querySelector('.table').innerHTML = '<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>'
+    const boxlist = document.querySelectorAll('.table .box');
+    boxlist.forEach( (box, index) => {
+        box.addEventListener('click', () =>{
+            if (turn){
+                box.classList.add('mark-x');
+            }else{
+                box.classList.add('mark-o')
+            }
+            movesArray[index] = turn;
+            const mayWinner = numberWin();
+            if (mayWinner){
+                const lineWinner = document.createElement('div');
+                lineWinner.classList.add('line');
+                lineWinner.classList.add('line-winner-'+mayWinner);
+                document.querySelector('.table').append(lineWinner);
+                if (turn) x++
+                else o++;
+            }
+            document.querySelector('#x').innerText = x
+            document.querySelector('#o').innerText = o
+    
+            turn = !turn
+        }, {once: true})
+    });
+}
 function winner(i, j, k){
     if  (movesArray[i] == movesArray[j] &&
         movesArray[j] == movesArray[k] &&
@@ -38,21 +65,9 @@ function numberWin(){
     return null;
 }
 
-boxlist.forEach( (box, index) => {
-    box.addEventListener('click', () =>{
-        if (turn){
-            box.classList.add('mark-x');
-        }else{
-            box.classList.add('mark-o')
-        }
-        movesArray[index] = turn;
-        const mayWinner = numberWin();
-        if (mayWinner){
-            const lineWinner = document.createElement('div');
-            lineWinner.classList.add('line');
-            lineWinner.classList.add('line-winner-'+mayWinner);
-            document.querySelector('.table').append(lineWinner);
-        }
-        turn = !turn
-    }, {once: true})
+document.querySelector('#restart').addEventListener('click', () => {
+    movesArray = new Array(9).fill(null);
+    newGame();
 })
+
+newGame();

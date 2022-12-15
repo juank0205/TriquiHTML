@@ -1,3 +1,10 @@
+.score div span{
+    height: 2em;
+    width: 2em;
+    background-color: white;
+    display: inline-block;
+    text-align: center;
+}
 .table{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -13,7 +20,6 @@
     background-image: url(Images/x.svg);
     background-size: 100% 100%;
 }
-
 .mark-o{
     background-image: url(Images/o.svg);
     background-size: 100% 100%;
@@ -52,4 +58,13 @@
 .line-winner-8{
     background-image: url(Images/line-winner-3.svg);
     transform: rotate(90deg);
+}
+
+h1{
+    margin: 0;
+    font-family: cursive;
+}
+
+.score{
+    font-family: cursive;
 }
