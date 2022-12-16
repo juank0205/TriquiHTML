@@ -9,7 +9,7 @@ document.querySelector('#add').addEventListener('click', () => {
     boards++;
     const clone = templateGame.cloneNode(true);
     clone.querySelector('.table').id = boards;
-    game.appendChild(clone);
+    game.insertBefore(clone, game.children[game.children.length-1]);
     newGame(boards);
 });
 
