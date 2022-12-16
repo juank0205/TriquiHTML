@@ -1,108 +1,67 @@
-let turn = true;
-let movesArray = new Array(9).fill(null);
-const juega = document.querySelector('.turnDisplayer');
-let x=0, o=0;
+let x=0, o=0, boards = 0;
+let templateGame = document.getElementById('template-card').content;
+let game = document.getElementById('game');
+let xPoints = document.querySelector('#x');
+let oPoints = document.querySelector('#o');
 
+//Create new board
+document.querySelector('#add').addEventListener('click', () => {
+    boards++;
+    const clone = templateGame.cloneNode(true);
+    clone.querySelector('.table').id = boards;
+    game.appendChild(clone);
+    newGame(boards);
+});
 
+//Add functionality to new board
+function newGame(id){
+    //Store the current board acording to the id given
+    const clone = document.getElementById(id)
+    let movesArray = new Array(9).fill(null);
+    let turn = true;
+    let isOver = false;
 
-function newGame(){
-    turn = true;
-    isOver = false;
-    const table = document.querySelector('.table');
-    table.innerHTML = '<div id="1" class="box"></div><div id="2" class="box"></div><div id="3" class="box"></div><div id="4" class="box"></div><div id="5" class="box"></div><div id="6" class="box"></div><div id="7" class="box"></div><div id="8" class="box"></div><div id="9" class="box"></div>'
-    const boxlist = document.querySelectorAll('.table .box');
+    //Add click listener to the board
+    clone.addEventListener('click', (event)=>{
+        //RETURN if board already has a winner
+        if (isOver) return;
 
-    if (!turn){
-        juega.innerText = 'Juega O';
-    }else{
-        juega.innerText = 'Juega X';
-    }
-
-    table.addEventListener('click', (event)=>{
-        if (isOver){
-            return;
-        }
+        //Store the box that was clicked and its id
         const box = event.target;
-        const index = box.id;
-        console.log(index);
+        if (box.classList.contains('table')) return;
+        const index = box.classList[1].charAt(box.classList[1].length-1);
+        if (index>9 && index<1) return;
 
-        if (index>9 && index<1){
-            return;
-        }
-
+        //Check if that box has already been played, if it hasnt been, set the class to mark-x or mark-o
         if (movesArray[index-1] == null){
-            if (turn){
-                box.classList.add('mark-x');
-                juega.innerText = 'Juega O'
-            }else{
-                box.classList.add('mark-o')
-                juega.innerText = 'Juega X'
-            }
+            if (turn) box.classList.add('mark-x');
+            else box.classList.add('mark-o');
             movesArray[index-1] = turn;
             turn = !turn;
-        }else{
-            void(0);
         }
-        console.log(movesArray);
-        console.log(turn);
 
-        const mayWinner = numberWin();
+        //Check if there is a winner with the last move
+        const mayWinner = numberWin(movesArray);
         if (mayWinner){
-            const lineWinner = document.createElement('div');
-            lineWinner.classList.add('line');
-            lineWinner.classList.add('line-winner-'+mayWinner);
-            document.querySelector('.table').append(lineWinner);
-            if (!turn) x++
-            else o++;
+            printLine(clone, mayWinner);
+            addPoint(turn);
             isOver = true;
         }
-
-        document.querySelector('#x').innerText = x
-        document.querySelector('#o').innerText = o
-
     });
 }
-function winner(i, j, k){
-    if  (movesArray[i] == movesArray[j] &&
-        movesArray[j] == movesArray[k] &&
-        movesArray[i] != null) 
-        return true;
-        return false;
+
+//Functions to check winner and change score
+const winner = (i, j, k, movesArray) => movesArray[i] == movesArray[j] && movesArray[j] == movesArray[k] && movesArray[i] != null ? true : false;
+const numberWin = movesArray => winner(0, 1, 2, movesArray) ? 1 : winner(3, 4, 5, movesArray) ? 2 : winner(6, 7, 8, movesArray) ? 3 : winner(0, 3, 6, movesArray) ? 4 : winner(1, 4, 7, movesArray) ? 5 : winner(2, 5, 8, movesArray) ? 6 : winner(0, 4, 8, movesArray) ? 7 : winner(2, 4, 6, movesArray) ? 8 : null;
+const addPoint = turn => {
+    turn ? o++ : x++;
+    xPoints.innerText = x;
+    oPoints.innerText = o;
+};
+
+//Print the winning line
+function printLine(clone, mayWinner){
+    const lineWinner = document.createElement('div');
+    lineWinner.classList.add('line-winner-'+ mayWinner, 'line');
+    clone.append(lineWinner);
 }
-
-function numberWin(){
-    if (winner(0, 1, 2)){
-        return 1;
-    }
-    if (winner(3, 4, 5)){
-        return 2;
-    }
-    if (winner(6, 7, 8)){
-        return 3;
-    }
-    if (winner(0, 3, 6)){
-        return 4;
-    }
-    if (winner(1, 4, 7)){
-        return 5;
-    }
-    if (winner(2, 5, 8)){
-        return 6;
-    }
-    if (winner(0, 4, 8)){
-        return 7;
-    }
-    if (winner(2, 4, 6)){
-        return 8;
-    }
-    return null;
-}
-
-document.querySelector('#restart').addEventListener('click', () => {
-    movesArray = new Array(9).fill(null);
-    newGame();
-})
-
-
-
-newGame();
